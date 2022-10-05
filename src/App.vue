@@ -68,11 +68,11 @@ export default {
       this.weather.current.temp = Math.round(((this.weather.current.temp-273.15)*1.8)+32)
       this.weather.current.feels_like = Math.round(((this.weather.current.feels_like-273.15)*1.8)+32)
       this.weather.current.dew_point = Math.round(((this.weather.current.dew_point-273.15)*1.8)+32)
-      this.weather.hourly.map(i=>{
-        i.temp = Math.round(((i.temp-273.15)*1.8)+32)
-        i.feels_like = Math.round(((i.feels_like-273.15)*1.8)+32)
-        i.dew_point = Math.round(((i.dew_point-273.15)*1.8)+32)
-      })
+      // this.weather.hourly.map(i=>{
+      //   i.temp = Math.round(((i.temp-273.15)*1.8)+32)
+      //   i.feels_like = Math.round(((i.feels_like-273.15)*1.8)+32)
+      //   i.dew_point = Math.round(((i.dew_point-273.15)*1.8)+32)
+      // })
       this.location = geoFind.lookup(this.lat,this.lon,'us')
     },(err)=>console.log(err))
     }
