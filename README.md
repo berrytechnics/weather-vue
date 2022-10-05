@@ -1,6 +1,6 @@
 # weather-vue
 
-[Imgur](https://i.imgur.com/3HhzL97.png)
+![Screenshot](https://i.imgur.com/3HhzL97.png)
 
 ## Project setup
 ```
