@@ -9,31 +9,31 @@
         <tbody>
           <tr>
             <td class="text-right">Sunrise:</td>
-            <td>{{weather.current.sunrise}}</td>
+            <td>{{weather.sunrise}}</td>
           </tr>
           <tr>
             <td class="text-right">Sunset:</td>
-            <td>{{weather.current.sunset}}</td>
+            <td>{{weather.sunset}}</td>
           </tr>
           <tr>
             <td class="text-right">Temperature:</td>
-            <td>{{weather.current.temp}}&deg;F</td>
+            <td>{{weather.temp}}&deg;F</td>
           </tr>
           <tr>
             <td class="text-right">Feels Like:</td>
-            <td>{{weather.current.feels_like}}&deg;F</td>
+            <td>{{weather.feels_like}}&deg;F</td>
           </tr>
           <tr>
             <td class="text-right">Humidity:</td>
-            <td>{{weather.current.humidity}}%</td>
+            <td>{{weather.humidity}}%</td>
           </tr>
           <tr>
             <td class="text-right">Dew Point:</td>
-            <td>{{weather.current.dew_point}}&deg;F</td>
+            <td>{{weather.dew_point}}&deg;F</td>
           </tr>
           <tr>
             <td class="text-right">Pressure:</td>
-            <td>{{weather.current.pressure}}"/Hg</td>
+            <td>{{weather.pressure}}"/Hg</td>
           </tr>
         </tbody>
       </table>
@@ -63,29 +63,4 @@ export default {
 }
 </script>
 <style scoped>
-*{
-  font-family: roboto, Arial, Helvetica, sans-serif;
-}
-.container{
-  background-color:rgb(50, 46, 46);
-  color:rgb(178, 202, 89);
-  padding:1rem;
-  padding-top:0;
-  border:1px solid black;
-  border-radius:1rem
-}
-h1,h3{
-  text-align: center;
-}
-.center-container {
-    width: 100%;
-    text-align:center;
-}
-canvas,table {
-    display: inline;
-}
-.text-right{
-  text-align:right;
-  padding-right:5rem
-}
 </style>

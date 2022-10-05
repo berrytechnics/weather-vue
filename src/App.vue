@@ -1,16 +1,18 @@
 <template>
-  <!-- <Forecast :weather='weather' :location='location' /> -->
-  <Current :weather="weather" :location="location" :wxIcon="wxIcon" />
+  <Forecast :weather='weather.daily' :location='location' />
+  <Current :weather="weather.current" :location="location" :wxIcon="wxIcon" />
 </template>
 <script>
   import axios from 'axios';
   import moment from 'moment-timezone';
   import geoFind from 'reverse-geocode';
   import Current from './components/Current'
+  import Forecast from './components/Forecast'
 export default {
   name: 'Weather',
   components:{
-    Current
+    Current,
+    Forecast
   },
   data:()=>{
     return{
@@ -60,6 +62,30 @@ export default {
 }
   
 </script>
-<style scoped>
-
+<style>
+*{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.container{
+    background-color:rgb(50, 46, 46);
+    color:rgb(178, 202, 89);
+    padding:1rem;
+    padding-top:0;
+    border:1px solid black;
+    border-radius:1rem
+}
+h1,h3{
+  text-align: center;
+}
+.center-container {
+    width: 100%;
+    text-align:center;
+}
+canvas,table {
+    display: inline;
+}
+.text-right{
+  text-align:right;
+  padding-right:5rem
+}
 </style>
