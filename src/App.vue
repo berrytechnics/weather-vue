@@ -9,11 +9,11 @@
         <tbody>
           <tr>
             <td class="text-right">Sunrise:</td>
-            <td>{{weather.current.sunrise}} AM</td>
+            <td>{{weather.current.sunrise}}</td>
           </tr>
           <tr>
             <td class="text-right">Sunset:</td>
-            <td>{{weather.current.sunset}} PM</td>
+            <td>{{weather.current.sunset}}</td>
           </tr>
           <tr>
             <td class="text-right">Temperature:</td>
@@ -71,7 +71,9 @@ export default {
   },
   methods:{
     getF:(C)=>Math.round(((C-273.15)*1.8)+32),
-    getHg:(P)=>Math.round(P*0.296133971008484)
+    getHg:(P)=>Math.round(P*0.296133971008484),
+    getDateTime:(T)=>moment(new Date(T*1000)).format('MM/DD/YYYY h:mm A'),
+    getTime:(T)=>moment(new Date(T*1000)).format('h:MM A')
   },
   mounted(){
     navigator.geolocation.getCurrentPosition(async(pos)=>{
@@ -81,9 +83,9 @@ export default {
       if(this.icon == "Clear"){
         new Date()>=new Date(this.weather.current.sunset*1000) ?  this.icon = "clear-night" : this.icon = "clear-day"
       }
-      this.weather.current.dt = moment(new Date(this.weather.current.dt*1000))
-      this.weather.current.sunrise = moment(new Date(this.weather.current.sunrise*1000)).format("h:mm")
-      this.weather.current.sunset = moment(new Date(this.weather.current.sunset*1000)).format("h:mm")
+      this.weather.current.dt = this.getDateTime(this.weather.current.dt)
+      this.weather.current.sunrise = this.getTime(this.weather.current.sunrise)
+      this.weather.current.sunset = this.getTime(this.weather.current.sunset)
       this.weather.current.temp = this.getF(this.weather.current.temp)
       this.weather.current.feels_like = this.getF(this.weather.current.feels_like)
       this.weather.current.dew_point = this.getF(this.weather.current.dew_point)
