@@ -25,8 +25,8 @@
             <td>{{weather.sunset}}</td>
           </tr>
           <tr>
-            <td class="text-right">Temperature:</td>
-            <td>{{weather.temp}}&deg;F</td>
+            <td class="text-right">Low / High:</td>
+            <td>{{weather.min}} / {{weather.max}} &deg;F</td>
           </tr>
           <tr>
             <td class="text-right">Feels Like:</td>

@@ -17,15 +17,6 @@ export default {
     return{
       weather:{current:{}},
       location:{},
-      iconLookup:{
-        "Thunderstorm":"rain",
-        "Drizzle":"rain",
-        "Rain":"rain",
-        "Snow":"snow",
-        "Clear":"clear",
-        "Atmosphere":"fog",
-        "Clouds":"cloudy"
-      },
       wxIcon:""
     }
   },
@@ -35,15 +26,24 @@ export default {
     getDateTime:(T)=>moment(new Date(T*1000)).format('MM/DD/YYYY h:mm A'),
     getTime:(T)=>moment(new Date(T*1000)).format('h:MM A'),
     getLoc:(lat,lon)=>geoFind.lookup(lat,lon,'us'),
-    getIcon:(weather)=>{
-
+    getWxIcon:(weather)=>{
+      let lookup = {
+        "Thunderstorm":"rain",
+        "Drizzle":"rain",
+        "Rain":"rain",
+        "Snow":"snow",
+        "Clear":"clear",
+        "Atmosphere":"fog",
+        "Clouds":"cloudy"
+      }
+      return lookup[weather]
     }
   },
   mounted(){
     navigator.geolocation.getCurrentPosition(async(pos)=>{
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&appid=${process.env.VUE_APP_API_KEY}`)
       this.weather = response.data
-      this.wxIcon = this.iconLookup[this.weather.current.weather[0].main]
+      this.wxIcon = this.getWxIcon(this.weather.current.weather[0].main)
       if(this.wxIcon == "clear"){
         new Date()>=new Date(this.weather.current.sunset*1000) ?  this.wxIcon = "clear-night" : this.wxIcon = "clear-day"
       }
@@ -55,6 +55,8 @@ export default {
       this.weather.current.feels_like = this.getF(this.weather.current.feels_like)
       this.weather.current.dew_point = this.getF(this.weather.current.dew_point)
       this.weather.current.pressure = this.getHg(this.weather.current.pressure)
+      this.weather.current.min = this.getF(this.weather.daily[0].temp.min)
+      this.weather.current.max = this.getF(this.weather.daily[0].temp.max)
       this.weather.daily.shift()
       for(let i=0; i<this.weather.daily.length; i++){
         this.weather.daily[i].temp.max = this.getF(this.weather.daily[i].temp.max)
@@ -68,7 +70,7 @@ export default {
 </script>
 <style>
 *{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .container{
     margin-bottom:.5rem;
