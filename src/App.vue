@@ -1,6 +1,6 @@
 <template>
-  <Forecast :weather='weather.daily' :location='location' />
   <Current :weather="weather.current" :location="location" :wxIcon="wxIcon" />
+  <Forecast :weather='weather.daily' :location='location' />
 </template>
 <script>
   import axios from 'axios';
@@ -56,6 +56,11 @@ export default {
       this.weather.current.feels_like = this.getF(this.weather.current.feels_like)
       this.weather.current.dew_point = this.getF(this.weather.current.dew_point)
       this.weather.current.pressure = this.getHg(this.weather.current.pressure)
+      this.weather.daily.shift()
+      for(let i=0; i<this.weather.daily.length; i++){
+        this.weather.daily[i].temp.max = this.getF(this.weather.daily[i].temp.max)
+        this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
+      }
       this.location = this.getLoc(pos.coords.latitude,pos.coords.longitude)
     },(err)=>alert('Your browser does not support this app!'))
   }
@@ -67,6 +72,7 @@ export default {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .container{
+    margin-bottom:.5rem;
     background-color:rgb(50, 46, 46);
     color:rgb(178, 202, 89);
     padding:1rem;
