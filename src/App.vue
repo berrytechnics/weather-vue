@@ -1,10 +1,44 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1>Weather for {{location.city}}</h1>
+      <h1>Weather for {{location.city}}<!-- , {{location.state}} --></h1>
     </div>
     <div class="body">
-      <ul>
+      <div id="center-container">
+        <table>
+        <tbody>
+          <tr>
+            <td class="text-right">Sunrise:</td>
+            <td>{{weather.current.sunrise}}</td>
+          </tr>
+          <tr>
+            <td class="text-right">Sunset:</td>
+            <td>{{weather.current.sunset}}</td>
+          </tr>
+          <tr>
+            <td class="text-right">Temperature:</td>
+            <td>{{weather.current.temp}}&deg;F</td>
+          </tr>
+          <tr>
+            <td class="text-right">Feels Like:</td>
+            <td>{{weather.current.feels_like}}&deg;F</td>
+          </tr>
+          <tr>
+            <td class="text-right">Humidity:</td>
+            <td>{{weather.current.humidity}}%</td>
+          </tr>
+          <tr>
+            <td class="text-right">Dew Point:</td>
+            <td>{{weather.current.dew_point}}&deg;F</td>
+          </tr>
+          <tr>
+            <td class="text-right">Pressure:</td>
+            <td>{{weather.current.pressure}} mm/Hg</td>
+          </tr>
+        </tbody>
+      </table>
+      </div> 
+      <!-- <ul>
       <li>Sunrise: {{weather.current.sunrise}}</li>
       <li>Sunset: {{weather.current.sunset}}</li>
       <li>Temp: {{weather.current.temp}}&deg;F</li>
@@ -12,9 +46,9 @@
       <li>Humidity: {{weather.current.humidity}}%</li>
       <li>Dew Point: {{weather.current.dew_point}}&deg;F</li>
       <li>Pressure: {{weather.current.pressure}} mm/Hg</li>
-    </ul>
+    </ul> -->
     <br />
-    <div id="canvas-container">
+    <div id="center-container">
       <Skycon v-if="icon=='Thunderstorm'||icon=='Drizzle'||icon=='Rain'" condition="rain" size="400"/>
       <Skycon v-if="icon=='Snow'" condition="snow" size="400"/>
       <Skycon v-if="icon=='Atmosphere'" condition="fog" size="400"/>
@@ -94,18 +128,22 @@ export default {
 h1{
   text-align: center;
 }
-ul{
+/* ul{
   list-style-type:none;
 }
 li{
   margin:.5rem
-}
-#canvas-container {
+} */
+
+#center-container {
    width: 100%;
    text-align:center;
 }
-
-canvas {
+canvas,table {
    display: inline;
+}
+.text-right{
+  text-align:right;
+  padding-right:5rem
 }
 </style>
