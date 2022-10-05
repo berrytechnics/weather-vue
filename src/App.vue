@@ -25,7 +25,6 @@
   </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 import moment from 'moment-timezone';
@@ -75,19 +74,11 @@ export default {
         i.dew_point = Math.round(((i.dew_point-273.15)*1.8)+32)
       })
       this.location = geoFind.lookup(this.lat,this.lon,'us')
-      // this.icon = this.iconLookup[this.weather.current.weather.main]
     },(err)=>console.log(err))
     }
   }
 }
-
-
-// check for api auth
-// https://api.openweathermap.org/data/2.5/weather?q=tulsa&appid=e0f86c9594f7003a3224cfe5c8caab0e
-
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 *{
   font-family:roboto;
