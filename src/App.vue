@@ -70,10 +70,11 @@ export default {
     }
   },
   methods:{
-    getF:(C)=>Math.round(((C-273.15)*1.8)+32),
-    getHg:(P)=>Math.round(P*0.296133971008484),
+    getF:(K)=>Math.round(((K-273.15)*1.8)+32),
+    getHg:(P)=>Math.round(P*0.029529983071445),
     getDateTime:(T)=>moment(new Date(T*1000)).format('MM/DD/YYYY h:mm A'),
-    getTime:(T)=>moment(new Date(T*1000)).format('h:MM A')
+    getTime:(T)=>moment(new Date(T*1000)).format('h:MM A'),
+    getLoc:(lat,lon)=>geoFind.lookup(lat,lon,'us')
   },
   mounted(){
     navigator.geolocation.getCurrentPosition(async(pos)=>{
@@ -90,7 +91,7 @@ export default {
       this.weather.current.feels_like = this.getF(this.weather.current.feels_like)
       this.weather.current.dew_point = this.getF(this.weather.current.dew_point)
       this.weather.current.pressure = this.getHg(this.weather.current.pressure)
-      this.location = geoFind.lookup(pos.coords.latitude,pos.coords.longitude,'us')
+      this.location = this.getLoc(pos.coords.latitude,pos.coords.longitude)
     },(err)=>alert('Your browser does not support this app!'))
   }
 }
