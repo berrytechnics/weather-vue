@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1>Weather for {{location.city}}<!-- , {{location.state}} --></h1>
+      <h1>Weather for {{location.city}}</h1>
     </div>
     <div class="body">
       <div id="center-container">
@@ -9,11 +9,11 @@
         <tbody>
           <tr>
             <td class="text-right">Sunrise:</td>
-            <td>{{weather.current.sunrise}}</td>
+            <td>{{weather.current.sunrise}} AM</td>
           </tr>
           <tr>
             <td class="text-right">Sunset:</td>
-            <td>{{weather.current.sunset}}</td>
+            <td>{{weather.current.sunset}} PM</td>
           </tr>
           <tr>
             <td class="text-right">Temperature:</td>
@@ -33,20 +33,11 @@
           </tr>
           <tr>
             <td class="text-right">Pressure:</td>
-            <td>{{weather.current.pressure}} mm/Hg</td>
+            <td>{{weather.current.pressure}}"/Hg</td>
           </tr>
         </tbody>
       </table>
       </div> 
-      <!-- <ul>
-      <li>Sunrise: {{weather.current.sunrise}}</li>
-      <li>Sunset: {{weather.current.sunset}}</li>
-      <li>Temp: {{weather.current.temp}}&deg;F</li>
-      <li>Feels like: {{weather.current.feels_like}}&deg;F</li>
-      <li>Humidity: {{weather.current.humidity}}%</li>
-      <li>Dew Point: {{weather.current.dew_point}}&deg;F</li>
-      <li>Pressure: {{weather.current.pressure}} mm/Hg</li>
-    </ul> -->
     <br />
     <div id="center-container">
       <Skycon v-if="icon=='Thunderstorm'||icon=='Drizzle'||icon=='Rain'" condition="rain" size="400"/>
@@ -78,6 +69,10 @@ export default {
       icon:""
     }
   },
+  methods:{
+    getF:(C)=>Math.round(((C-273.15)*1.8)+32),
+    getHg:(P)=>Math.round(P*0.296133971008484)
+  },
   mounted(){
     navigator.geolocation.getCurrentPosition(async(pos)=>{
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&appid=${process.env.VUE_APP_API_KEY}`)
@@ -87,16 +82,12 @@ export default {
         new Date()>=new Date(this.weather.current.sunset*1000) ?  this.icon = "clear-night" : this.icon = "clear-day"
       }
       this.weather.current.dt = moment(new Date(this.weather.current.dt*1000))
-      this.weather.current.sunrise = moment(new Date(this.weather.current.sunrise*1000)).fromNow()
-      this.weather.current.sunset = moment(new Date(this.weather.current.sunset*1000)).fromNow()
-      this.weather.current.temp = Math.round(((this.weather.current.temp-273.15)*1.8)+32)
-      this.weather.current.feels_like = Math.round(((this.weather.current.feels_like-273.15)*1.8)+32)
-      this.weather.current.dew_point = Math.round(((this.weather.current.dew_point-273.15)*1.8)+32)
-      // this.weather.hourly.map(i=>{
-      //   i.temp = Math.round(((i.temp-273.15)*1.8)+32)
-      //   i.feels_like = Math.round(((i.feels_like-273.15)*1.8)+32)
-      //   i.dew_point = Math.round(((i.dew_point-273.15)*1.8)+32)
-      // })
+      this.weather.current.sunrise = moment(new Date(this.weather.current.sunrise*1000)).format("h:mm")
+      this.weather.current.sunset = moment(new Date(this.weather.current.sunset*1000)).format("h:mm")
+      this.weather.current.temp = this.getF(this.weather.current.temp)
+      this.weather.current.feels_like = this.getF(this.weather.current.feels_like)
+      this.weather.current.dew_point = this.getF(this.weather.current.dew_point)
+      this.weather.current.pressure = this.getHg(this.weather.current.pressure)
       this.location = geoFind.lookup(pos.coords.latitude,pos.coords.longitude,'us')
     },(err)=>alert('Your browser does not support this app!'))
   }
@@ -117,13 +108,6 @@ export default {
 h1{
   text-align: center;
 }
-/* ul{
-  list-style-type:none;
-}
-li{
-  margin:.5rem
-} */
-
 #center-container {
    width: 100%;
    text-align:center;
