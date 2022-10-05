@@ -71,9 +71,6 @@ export default {
   },
   data(){
     return{
-      lat:null,
-      lon:null,
-      sundown:null,
       location:{},
       weather:{
         current:{}
@@ -82,15 +79,8 @@ export default {
     }
   },
   mounted(){
-    if((!"geolocation" in navigator)){
-      this.lat = 40.6892;
-      this.lon = 74.0445
-    }
-    else{
-      navigator.geolocation.getCurrentPosition(async(pos)=>{
-      this.lat = pos.coords.latitude
-      this.lon = pos.coords.longitude
-      const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${this.lat}&lon=${this.lon}&appid=${process.env.VUE_APP_API_KEY}`)
+    navigator.geolocation.getCurrentPosition(async(pos)=>{
+      const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&appid=${process.env.VUE_APP_API_KEY}`)
       this.weather = response.data
       this.icon = this.weather.current.weather[0].main
       if(this.icon == "Clear"){
@@ -107,9 +97,8 @@ export default {
       //   i.feels_like = Math.round(((i.feels_like-273.15)*1.8)+32)
       //   i.dew_point = Math.round(((i.dew_point-273.15)*1.8)+32)
       // })
-      this.location = geoFind.lookup(this.lat,this.lon,'us')
-    },(err)=>console.log(err))
-    }
+      this.location = geoFind.lookup(pos.coords.latitude,pos.coords.longitude,'us')
+    },(err)=>alert('Your browser does not support this app!'))
   }
 }
 </script>
