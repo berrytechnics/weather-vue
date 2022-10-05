@@ -14,12 +14,15 @@
       <li>Pressure: {{weather.current.pressure}} mm/Hg</li>
     </ul>
     <br />
-    <Skycon v-if="icon=='Thunderstorm'||icon=='Drizzle'||icon=='Rain'" condition="rain" size="400"/>
-    <Skycon v-if="icon=='Snow'" condition="snow" size="400"/>
-    <Skycon v-if="icon=='Atmosphere'" condition="fog" size="400"/>
-    <Skycon v-if="icon=='clear-night'" condition="clear-night" size="400"/>
-    <Skycon v-if="icon=='clear-day'" condition="clear-day" size="400"/>
+    <div id="canvas-container">
+      <Skycon v-if="icon=='Thunderstorm'||icon=='Drizzle'||icon=='Rain'" condition="rain" size="400"/>
+      <Skycon v-if="icon=='Snow'" condition="snow" size="400"/>
+      <Skycon v-if="icon=='Atmosphere'" condition="fog" size="400"/>
+      <Skycon v-if="icon=='Clouds'" condition="cloudy" size="400"/>
+      <Skycon v-if="icon=='clear-night'" condition="clear-night" size="400"/>
+      <Skycon v-if="icon=='clear-day'" condition="clear-day" size="400"/>
     </div>
+  </div>
   </div>
 </template>
 
@@ -105,5 +108,13 @@ ul{
 }
 li{
   margin:.5rem
+}
+#canvas-container {
+   width: 100%;
+   text-align:center;
+}
+
+canvas {
+   display: inline;
 }
 </style>
