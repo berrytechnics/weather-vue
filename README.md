@@ -5,6 +5,8 @@
 yarn install
 ```
 
+requires .env file with VUE_APP_API_KEY variable to run for development
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve
