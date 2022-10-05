@@ -25,7 +25,7 @@ export default {
         "Atmosphere":"fog",
         "Clouds":"cloudy"
       },
-      wxIcon:null
+      wxIcon:""
     }
   },
   methods:{
@@ -42,9 +42,7 @@ export default {
     navigator.geolocation.getCurrentPosition(async(pos)=>{
       const response = await axios.get(`https://api.openweathermap.org/data/3.0/onecall?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&appid=${process.env.VUE_APP_API_KEY}`)
       this.weather = response.data
-
-      let apiWx = this.weather.current.weather[0].main
-      this.wxIcon = this.iconLookup[apiWx]
+      this.wxIcon = this.iconLookup[this.weather.current.weather[0].main]
       if(this.wxIcon == "clear"){
         new Date()>=new Date(this.weather.current.sunset*1000) ?  this.wxIcon = "clear-night" : this.wxIcon = "clear-day"
       }

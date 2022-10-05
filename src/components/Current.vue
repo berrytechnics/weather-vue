@@ -39,7 +39,12 @@
       </table>
       </div> 
       <div class="center-container">
-        <Skycon :condition="wxIcon" size="400" />
+        <Skycon v-if="wxIcon=='clear-day'" condition="clear-day" size="400" />
+        <Skycon v-if="wxIcon=='clear-night'" condition="clear-night" size="400" />
+        <Skycon v-if="wxIcon=='fog'" condition="fog" size="400" />
+        <Skycon v-if="wxIcon=='rain'" condition="rain" size="400" />
+        <Skycon v-if="wxIcon=='snow'" condition="snow" size="400" />
+        <Skycon v-if="wxIcon=='cloudy'" condition="cloudy" size="400" />
       </div>
     </div>
 </template>
