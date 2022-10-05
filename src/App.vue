@@ -84,11 +84,11 @@ export default {
       this.weather = response.data
       this.icon = this.weather.current.weather[0].main
       if(this.icon == "Clear"){
-        Date.now()>=this.weather.current.sunset ?  this.icon = "clear-night" : this.icon = "clear-day"
+        new Date()>=new Date(this.weather.current.sunset*1000) ?  this.icon = "clear-night" : this.icon = "clear-day"
       }
-      this.weather.current.dt = moment.unix(this.weather.current.dt)
-      this.weather.current.sunrise = Date.now()>this.weather.current.sunrise ? moment.unix(this.weather.current.sunrise).toNow() : moment.unix(this.weather.current.sunrise).fromNow()
-      this.weather.current.sunset = Date.now()<this.weather.current.sunset ? moment.unix(this.weather.current.sunset).toNow() : moment.unix(this.weather.current.sunset).fromNow()
+      this.weather.current.dt = moment(new Date(this.weather.current.dt*1000))
+      this.weather.current.sunrise = moment(new Date(this.weather.current.sunrise*1000)).fromNow()
+      this.weather.current.sunset = moment(new Date(this.weather.current.sunset*1000)).fromNow()
       this.weather.current.temp = Math.round(((this.weather.current.temp-273.15)*1.8)+32)
       this.weather.current.feels_like = Math.round(((this.weather.current.feels_like-273.15)*1.8)+32)
       this.weather.current.dew_point = Math.round(((this.weather.current.dew_point-273.15)*1.8)+32)
