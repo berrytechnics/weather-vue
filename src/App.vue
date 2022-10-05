@@ -104,7 +104,7 @@ export default {
 </script>
 <style scoped>
 *{
-  font-family:roboto;
+  font-family: roboto, Arial, Helvetica, sans-serif;
 }
 .container{
   background-color:rgb(50, 46, 46);
