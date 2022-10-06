@@ -1,14 +1,11 @@
 <template>
 	<main class="container">
 		<Current
-		class="component currentComponent"
-		:weather="weather.current"
-		:location="location"
-		:wxIcon="wxIcon" />
-		<Forecast 
-			class="component forecastComponent" 
-			:weather="weather.daily" 
-			location="location" />
+			class="component currentComponent"
+			:weather="weather.current"
+			:location="location"
+			:wxIcon="wxIcon" />
+		<Forecast class="component forecastComponent" :weather="weather.daily" location="location" />
 	</main>
 </template>
 <script>
@@ -32,7 +29,7 @@
 		},
 		methods: {
 			getF: K => Math.round((K - 273.15) * 1.8 + 32),
-			getHg: P => Math.round(P * 0.029529983071445),
+			getHg: P => Math.round(P * 0.029529983071445 * 100) / 100,
 			getDateTime: T => moment(new Date(T * 1000)).format("MM/DD/YYYY h:mm A"),
 			getTime: T => moment(new Date(T * 1000)).format("h:MM A"),
 			getLoc: (lat, lon) => geoFind.lookup(lat, lon, "us"),
@@ -74,6 +71,7 @@
 					this.weather.current.max = this.getF(this.weather.daily[0].temp.max)
 					this.weather.daily.shift()
 					for (let i = 0; i < this.weather.daily.length; i++) {
+						this.weather.daily[i].pressure = this.getHg(this.weather.daily[i].pressure)
 						this.weather.daily[i].temp.max = this.getF(this.weather.daily[i].temp.max)
 						this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
 					}
@@ -81,42 +79,41 @@
 				},
 				err => alert("Your browser does not support this app!")
 			)
-		}
+		},
 	}
 </script>
 <style>
-.container {
-	border: none;
-	border-radius: 1rem;
-	display: flex;
-	flex-wrap:wrap;
-	flex-basis:4;
-	justify-content: center;
-}
-.component{
-	color: rgb(178, 202, 89);
-	font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu,
-		Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-	background-color: rgb(49, 46, 46);
-	border-radius:1rem;
-	padding:1rem;
-	white-space: nowrap;
-	margin:.25rem;
-}
-.currentComponent{
-	flex-grow:3;
-}
-.forecastComponent{
-	flex-grow:6;
-}
-.text-center{
-	text-align: center;
-}
-.text-right{
-	text-align: right;
-}
-.text-underline{
-	text-decoration: underline;
-}
-
+	.container {
+		border: none;
+		border-radius: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		flex-basis: 4;
+		justify-content: center;
+	}
+	.component {
+		color: rgb(178, 202, 89);
+		font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu,
+			Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+		background-color: rgb(49, 46, 46);
+		border-radius: 1rem;
+		padding: 1rem;
+		white-space: nowrap;
+		margin: 0.25rem;
+	}
+	.currentComponent {
+		flex-grow: 3;
+	}
+	.forecastComponent {
+		flex-grow: 6;
+	}
+	.text-center {
+		text-align: center;
+	}
+	.text-right {
+		text-align: right;
+	}
+	.text-underline {
+		text-decoration: underline;
+	}
 </style>
