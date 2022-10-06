@@ -1,19 +1,19 @@
 <template>
-    <div class="container current-weather">
-      <div class="header">
+    <div class="box current-weather">
+      <div class="header text-center">
         <h1>Current weather</h1>
         <h3>for {{location.city}}, {{location.state_abbr}} ({{location.zipcode}})</h3>
       </div>
-      <div class="center-container">
+      <div>
         <Skycon size="150" speed="3" color="#ffff00" v-if="wxIcon=='clear-day'" condition="clear-day" />
         <Skycon size="150" speed="3" color="#ccccaa" v-if="wxIcon=='clear-night'" condition="clear-night" />
         <Skycon size="150" speed="3" color="#aaaaaa" v-if="wxIcon=='fog'" condition="fog" />
         <Skycon size="150" speed="3" color="#999999" v-if="wxIcon=='rain'" condition="rain" />
         <Skycon size="150" speed="3" color="#ffffff" v-if="wxIcon=='snow'" condition="snow" />
         <Skycon size="150" speed="3" color="#cccccc" v-if="wxIcon=='cloudy'" condition="cloudy" />
-        <h1><span class="text-underline">{{weather.temp}}</span>&deg;<sup>F</sup></h1>
+        <h1 class="text-center"><span class="text-underline text-center">{{weather.temp}}</span>&deg;<sup>F</sup></h1>
       </div>
-      <div class="center-container">
+      <div>
         <table>
         <tbody>
           <tr>
@@ -64,7 +64,15 @@ export default {
 }
 </script>
 <style scoped>
-  .center-container{
-    margin-bottom:1rem
+  .current-weather{
+    
   }
+  table{
+    margin:auto;
+  }
+  canvas{
+    display:block;
+    margin:auto;
+  }
+ 
 </style>
