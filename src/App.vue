@@ -59,7 +59,6 @@
 							? (this.wxIcon = "clear-night")
 							: (this.wxIcon = "clear-day")
 					}
-
 					this.weather.current.dt = this.getDateTime(this.weather.current.dt)
 					this.weather.current.sunrise = this.getTime(this.weather.current.sunrise)
 					this.weather.current.sunset = this.getTime(this.weather.current.sunset)
@@ -83,37 +82,38 @@
 	}
 </script>
 <style>
+@media(min-width:768px){
 	.container {
-		border: none;
-		border-radius: 1rem;
-		display: flex;
-		flex-wrap: wrap;
-		flex-basis: 4;
-		justify-content: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items:start;
 	}
-	.component {
-		color: rgb(178, 202, 89);
-		font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu,
-			Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-		background-color: rgb(49, 46, 46);
-		border-radius: 1rem;
-		padding: 1rem;
-		white-space: nowrap;
-		margin: 0.25rem;
-	}
-	.currentComponent {
-		flex-grow: 3;
-	}
-	.forecastComponent {
-		flex-grow: 6;
-	}
-	.text-center {
-		text-align: center;
-	}
-	.text-right {
-		text-align: right;
-	}
-	.text-underline {
-		text-decoration: underline;
-	}
+}
+.component {
+	color: rgb(178, 202, 89);
+	font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu,
+		Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	background-color: rgb(49, 46, 46);
+	border-radius: 1rem;
+	padding: 1rem;
+	white-space: nowrap;
+	margin:.5rem;
+
+}
+.currentComponent{
+	flex:1;
+}
+.forecastComponent{
+	flex:6;
+}
+.text-center {
+	text-align: center;
+}
+.text-right {
+	text-align: right;
+}
+.text-underline {
+	text-decoration: underline;
+}
 </style>

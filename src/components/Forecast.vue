@@ -52,16 +52,15 @@
 	.container {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 1rem;
-		justify-content: center;
+		gap: .5rem;
+		justify-content: space-around;
 	}
 	.box {
 		border: 1px black solid;
 		border-radius: 1rem;
-		padding: 0.5rem;
+		padding: .3rem;
 		box-shadow: 0.5rem 0.5rem 0.8rem rgba(0, 0, 1, 0.319);
 	}
-
 	img {
 		display: block;
 		margin: auto;
