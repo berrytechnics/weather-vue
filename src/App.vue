@@ -1,11 +1,17 @@
 <template>
 	<main class="container">
+		<Loading v-if="isLoading" class="loadingComponent"/>
 		<Current
+			v-if="!isLoading"
 			class="component currentComponent"
 			:weather="weather.current"
 			:location="location"
 			:wxIcon="wxIcon" />
-		<Forecast class="component forecastComponent" :weather="weather.daily" location="location" />
+		<Forecast 
+			v-if="!isLoading"
+			class="component forecastComponent" 
+			:weather="weather.daily" 
+			location="location" />
 	</main>
 </template>
 <script>
@@ -14,14 +20,17 @@
 	import geoFind from "reverse-geocode"
 	import Forecast from "./components/Forecast"
 	import Current from "./components/Current"
+	import Loading from './components/Loading'
 	export default {
 		name: "Weather",
 		components: {
 			Current,
 			Forecast,
+			Loading
 		},
 		data() {
 			return {
+				isLoading:true,
 				weather: { current: {} },
 				location: {},
 				wxIcon: "",
@@ -75,6 +84,7 @@
 						this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
 					}
 					this.location = this.getLoc(pos.coords.latitude, pos.coords.longitude)
+					setTimeout(()=>{this.isLoading=false},500)
 				},
 				err => alert("Your browser does not support this app!")
 			)
@@ -100,6 +110,16 @@
 	white-space: nowrap;
 	margin:.5rem;
 
+}
+.loadingComponent{
+	width:100vw;
+	height:100vh;
+	margin:-.5em;
+	background-color: rgb(49,46,46);
+}
+.loadingComponent div{
+	display:block;
+	margin:auto;
 }
 .currentComponent{
 	flex:1;
