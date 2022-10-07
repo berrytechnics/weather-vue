@@ -84,7 +84,7 @@
 						this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
 					}
 					this.location = this.getLoc(pos.coords.latitude, pos.coords.longitude)
-					setTimeout(()=>{this.isLoading=false},500)
+					this.isLoading=false
 				},
 				err => alert("Your browser does not support this app!")
 			)
