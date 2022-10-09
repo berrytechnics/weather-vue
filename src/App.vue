@@ -1,18 +1,24 @@
 <template>
-	<main class="container">
+	<Transition>
 		<Loading v-if="isLoading" class="loadingComponent"/>
+	</Transition>
+	<div class="container">
 		<Current
-			v-if="!isLoading"
 			class="component currentComponent"
 			:weather="weather.current"
 			:location="location"
 			:wxIcon="wxIcon" />
+	</div>
+	<div class="container">
 		<Forecast 
-			v-if="!isLoading"
 			class="component forecastComponent" 
-			:weather="weather.daily" 
-			location="location" />
-	</main>
+			:weather="weather.daily" />
+	</div>
+	<div class="container">
+		<Precipitation
+			class="component precipitationComponent"
+			:weather="weather.precipitation" />
+	</div>
 </template>
 <script>
 	import axios from "axios"
@@ -20,12 +26,14 @@
 	import geoFind from "reverse-geocode"
 	import Forecast from "./components/Forecast"
 	import Current from "./components/Current"
+	import Precipitation from './components/Precipitation'
 	import Loading from './components/Loading'
 	export default {
 		name: "Weather",
 		components: {
 			Current,
 			Forecast,
+			Precipitation,
 			Loading
 		},
 		data() {
@@ -43,7 +51,7 @@
 			getTime: T => moment(new Date(T * 1000)).format("h:MM A"),
 			getLoc: (lat, lon) => geoFind.lookup(lat, lon, "us"),
 			getWxIcon: weather => {
-				let lookup = {
+				const lookup = {
 					Thunderstorm: "rain",
 					Drizzle: "rain",
 					Rain: "rain",
@@ -84,6 +92,9 @@
 						this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
 					}
 					this.location = this.getLoc(pos.coords.latitude, pos.coords.longitude)
+					let precipArr = []
+					for(let i=0; i<this.weather.minutely.length; i++){precipArr.push(this.weather.minutely[i].precipitation)}
+					this.weather.precipitation = precipArr
 					this.isLoading=false
 				},
 				err => alert("Your browser does not support this app!")
@@ -92,16 +103,17 @@
 	}
 </script>
 <style>
+/* screen break */
 @media(min-width:768px){
 	.container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items:start;
+	align-items:flex-start;
 	}
 }
 .component {
-	color: rgb(178, 202, 89);
+	color: #b2ca59;
 	font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu,
 		Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 	background-color: rgb(49, 46, 46);
@@ -111,21 +123,16 @@
 	margin:.5rem;
 
 }
-.loadingComponent{
-	width:100vw;
-	height:100vh;
-	margin:-.5em;
-	background-color: rgb(49,46,46);
-}
-.loadingComponent div{
-	display:block;
-	margin:auto;
-}
 .currentComponent{
 	flex:1;
 }
 .forecastComponent{
 	flex:6;
+}
+.precipitationComponent, .precipitationComponent canvas{
+	flex:6;
+	max-height:50vh;
+	padding-bottom:3rem;
 }
 .text-center {
 	text-align: center;
@@ -135,5 +142,14 @@
 }
 .text-underline {
 	text-decoration: underline;
+}
+/* Vue transitions \/  */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

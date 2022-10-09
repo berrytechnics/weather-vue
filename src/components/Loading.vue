@@ -34,6 +34,16 @@
         display:flex;
         justify-content: center;
         align-items: center;
+        width:100vw;
+        height:100vh;
+        margin:-.5em;
+        z-index:3;
+        position:absolute;
+        background-color: rgb(49,46,46);
+    }
+    .loading div{
+        display:block;
+        margin:auto;
     }
     svg{
         height:50vh;

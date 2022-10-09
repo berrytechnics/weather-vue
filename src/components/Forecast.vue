@@ -37,8 +37,7 @@
 		name: "Forecast",
 		components: [],
 		props: {
-			weather: Object,
-			location: Object,
+			weather: Object
 		},
 		data() {
 			return {
