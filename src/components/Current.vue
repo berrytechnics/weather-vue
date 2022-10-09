@@ -93,10 +93,9 @@
 	.box{
 		display:flex;
 		justify-content: space-around;
+		align-items: center;
 	}
 	.currentTemp{
 		line-break: nowrap;
-		display:block;
-		margin-top:-3rem;
 	}
 </style>

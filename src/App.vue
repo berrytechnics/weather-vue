@@ -8,16 +8,14 @@
 			:weather="weather.current"
 			:location="location"
 			:wxIcon="wxIcon" />
+		<Precipitation
+			class="component precipitationComponent"
+			:weather="precip" />
 	</div>
 	<div class="container">
 		<Forecast 
 			class="component forecastComponent" 
 			:weather="weather.daily" />
-	</div>
-	<div class="container">
-		<Precipitation
-			class="component precipitationComponent"
-			:weather="weather.precipitation" />
 	</div>
 </template>
 <script>
@@ -42,6 +40,7 @@
 				weather: { current: {} },
 				location: {},
 				wxIcon: "",
+				precip:{}
 			}
 		},
 		methods: {
@@ -91,10 +90,12 @@
 						this.weather.daily[i].temp.max = this.getF(this.weather.daily[i].temp.max)
 						this.weather.daily[i].temp.min = this.getF(this.weather.daily[i].temp.min)
 					}
-					this.location = this.getLoc(pos.coords.latitude, pos.coords.longitude)
 					let precipArr = []
-					for(let i=0; i<this.weather.minutely.length; i++){precipArr.push(this.weather.minutely[i].precipitation)}
-					this.weather.precipitation = precipArr
+					for(let i=0;i<this.weather.minutely.length;i++){
+						precipArr.push(this.weather.minutely[i].precipitation*100)
+					}
+					this.precip = {data:precipArr}
+					this.location = this.getLoc(pos.coords.latitude, pos.coords.longitude)
 					this.isLoading=false
 				},
 				err => alert("Your browser does not support this app!")
@@ -109,7 +110,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	align-items:flex-start;
 	}
 }
 .component {
@@ -130,7 +130,7 @@
 	flex:6;
 }
 .precipitationComponent, .precipitationComponent canvas{
-	flex:6;
+	flex:3;
 	max-height:50vh;
 	padding-bottom:3rem;
 }

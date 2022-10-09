@@ -20,16 +20,17 @@
     name: 'Precipitation',
     components: { Bar },
     props: {
-        weather:Array
+        weather:Object
     },
     data() {
       return {
         chartData: {
           labels: labels(),
+          
           datasets:[
             {
                 label:"% (next 60 mins.)",
-                data: this.weather,
+                data:this.weather.data,
                 backgroundColor:'#b2ca59'
             }
         ]
